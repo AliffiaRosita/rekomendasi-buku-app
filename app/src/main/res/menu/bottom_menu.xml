@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_home"
+        android:title="@string/home"
+        android:icon="@drawable/home"
+        />
+    <item
+        android:id="@+id/menu_book"
+        android:title="@string/buku"
+        android:icon="@drawable/notebook"
+        />
+    <item
+        android:id="@+id/menu_rekomendasi"
+        android:title="@string/rekomendasi"
+        android:icon="@drawable/heart"
+        />
+    <item
+        android:id="@+id/menu_user"
+        android:title="@string/home"
+        android:icon="@drawable/user"
+        />
+</menu>
