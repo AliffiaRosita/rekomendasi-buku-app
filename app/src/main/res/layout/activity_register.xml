@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="520dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
         android:background="#fff"
@@ -47,14 +47,14 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout6"
+                android:id="@+id/et_regis_nama"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/textView4"
-                android:layout_marginTop="8dp">
+                app:errorEnabled="true"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_regis_nama"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_regular"
@@ -64,13 +64,13 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout7"
+                android:id="@+id/et_regis_nim"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_regis_nim"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_regular"
@@ -81,13 +81,12 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout8"
+                android:id="@+id/et_regis_angkatan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                app:errorEnabled="true">
 
                 <EditText
-                    android:id="@+id/et_regis_angkatan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_regular"
@@ -102,8 +101,7 @@
                 android:text="@string/fakultas"
                 android:fontFamily="@font/montserrat_regular"
                 android:textSize="12sp"
-                android:textColor="@android:color/black"
-                android:layout_marginTop="8dp"/>
+                android:textColor="@android:color/black"/>
             <Spinner
                 android:id="@+id/et_regis_fakultas"
                 android:layout_width="match_parent"
@@ -113,19 +111,22 @@
                 android:entries="@array/list_fakultas" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout9"
+                android:id="@+id/et_regis_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp">
+                app:errorEnabled="true"
+
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_regis_pass"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_regular"
                     android:hint="Password"
                     android:inputType="textPassword"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    />
             </com.google.android.material.textfield.TextInputLayout>
             <TextView
                 android:id="@+id/textView"

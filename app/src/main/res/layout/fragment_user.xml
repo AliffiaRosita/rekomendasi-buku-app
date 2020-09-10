@@ -30,6 +30,7 @@
           app:civ_border_width="2dp" />
 
       <TextView
+          android:id="@+id/nama_user"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginTop="8dp"
@@ -40,6 +41,7 @@
           android:textSize="16sp" />
 
       <TextView
+          android:id="@+id/nim_user"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:fontFamily="@font/montserrat_regular"
@@ -49,6 +51,7 @@
           android:textSize="12sp" />
 
       <TextView
+          android:id="@+id/fakultas_user"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_marginTop="8dp"

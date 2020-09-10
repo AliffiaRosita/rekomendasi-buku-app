@@ -15,12 +15,13 @@ import rosita.aliffia.rekomendasibuku.R;
 import rosita.aliffia.rekomendasibuku.fragment.RecommendFragment;
 import rosita.aliffia.rekomendasibuku.fragment.UserFragment;
 import rosita.aliffia.rekomendasibuku.adapter.ViewPagerAdapter;
+import rosita.aliffia.rekomendasibuku.preference.AppPreference;
+import rosita.aliffia.rekomendasibuku.preference.UserModel;
 
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNav;
     private ViewPager viewPager;
-
     private MenuItem menuItem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

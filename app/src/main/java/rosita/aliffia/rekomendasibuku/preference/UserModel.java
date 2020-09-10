@@ -8,6 +8,7 @@ public class UserModel implements Parcelable {
     String nim;
     Boolean isActive;
     String token;
+    String fakultas,angkatan,fotoProfil,userId;
 
     protected UserModel(Parcel in) {
         name = in.readString();
@@ -15,6 +16,27 @@ public class UserModel implements Parcelable {
         byte tmpIsActive = in.readByte();
         isActive = tmpIsActive == 0 ? null : tmpIsActive == 1;
         token = in.readString();
+        fakultas = in.readString();
+        angkatan = in.readString();
+        fotoProfil = in.readString();
+        userId = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(nim);
+        dest.writeByte((byte) (isActive == null ? 0 : isActive ? 1 : 2));
+        dest.writeString(token);
+        dest.writeString(fakultas);
+        dest.writeString(angkatan);
+        dest.writeString(fotoProfil);
+        dest.writeString(userId);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<UserModel> CREATOR = new Creator<UserModel>() {
@@ -28,6 +50,38 @@ public class UserModel implements Parcelable {
             return new UserModel[size];
         }
     };
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getFakultas() {
+        return fakultas;
+    }
+
+    public void setFakultas(String fakultas) {
+        this.fakultas = fakultas;
+    }
+
+    public String getAngkatan() {
+        return angkatan;
+    }
+
+    public void setAngkatan(String angkatan) {
+        this.angkatan = angkatan;
+    }
+
+    public String getFotoProfil() {
+        return fotoProfil;
+    }
+
+    public void setFotoProfil(String fotoProfil) {
+        this.fotoProfil = fotoProfil;
+    }
 
     public String getName() {
         return name;
@@ -61,18 +115,7 @@ public class UserModel implements Parcelable {
         this.token = token;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(this.name);
-        parcel.writeString(this.nim);
-        parcel.writeString(this.token);
-        parcel.writeByte(this.isActive ? (byte) 1 : (byte) 0);;
-    }
     public UserModel(){}
 
 }
