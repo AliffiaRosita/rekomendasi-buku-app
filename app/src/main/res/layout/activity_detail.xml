@@ -25,7 +25,9 @@
             app:contentScrim="@color/colorOrange"
             app:expandedTitleGravity="center|bottom"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:expandedTitleTextAppearance="@style/CollapsedAppBar"
+            app:collapsedTitleTextAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:expandedTitleTextAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:maxLines="3"
             >
 
             <ImageView
@@ -34,12 +36,11 @@
                 android:background="@color/colorOrange"
                 app:layout_collapseMode="parallax" />
             <ImageView
-                android:id="@+id/imageView7"
+                android:id="@+id/foto_detail"
                 android:layout_width="120dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/cover" />
+                android:layout_marginBottom="20dp" />
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar_detail"
@@ -92,7 +93,18 @@
 <!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
-
+    <TextView
+        android:id="@+id/detail_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:drawableLeft="@drawable/ic_baseline_star_30"
+        android:text="4.6"
+        app:layout_anchor="@id/appBar"
+        app:layout_anchorGravity="top|right"
+        android:textColor="@color/colorDarkBlue"
+        android:textSize="16sp"/>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -119,13 +131,14 @@
 
             <TextView
                 android:id="@+id/detail_penerbit"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
                 android:fontFamily="@font/montserrat_regular"
                 android:text="Rineka Cipta"
                 android:textColor="@color/colorDarkBlue"
-                app:layout_constraintEnd_toEndOf="@+id/textView11"
-                app:layout_constraintStart_toStartOf="@+id/textView11"
+                android:textSize="9sp"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
             <TextView
@@ -136,36 +149,44 @@
                 android:text="Tempat Terbit"
                 android:textColor="@color/colorDarkBlue"
                 android:textSize="12sp"
-                app:layout_constraintEnd_toStartOf="@+id/detail_rating"
-                app:layout_constraintStart_toEndOf="@+id/textView11"
+                app:layout_constraintStart_toStartOf="@+id/detail_tempat"
                 app:layout_constraintTop_toTopOf="@+id/textView11" />
 
             <TextView
                 android:id="@+id/detail_tempat"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="2dp"
                 android:fontFamily="@font/montserrat_regular"
                 android:text="Jakarta"
                 android:textColor="@color/colorDarkBlue"
-                app:layout_constraintEnd_toEndOf="@+id/textView12"
-                app:layout_constraintStart_toStartOf="@+id/textView12"
+                android:textSize="9sp"
+                app:layout_constraintStart_toEndOf="@+id/detail_penerbit"
                 app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
             <TextView
-                android:id="@+id/detail_rating"
+                android:id="@+id/textView14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:drawableLeft="@drawable/ic_baseline_star_30"
-                android:text="4.6"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="ISBN"
                 android:textColor="@color/colorDarkBlue"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="@+id/detail_tempat"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="@+id/detail_isbn"
                 app:layout_constraintTop_toTopOf="@+id/textView12" />
 
+            <TextView
+                android:id="@+id/detail_isbn"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_regular"
+                android:text="121212"
+                android:textColor="@color/colorDarkBlue"
+                android:textSize="9sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/detail_tempat"
+                app:layout_constraintTop_toBottomOf="@+id/textView14" />
             <TextView
                 android:id="@+id/textView13"
                 android:layout_width="wrap_content"
@@ -180,7 +201,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/detail_penerbit" />
 
             <TextView
-                android:id="@+id/textView14"
+                android:id="@+id/tv_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -204,9 +225,9 @@
                 android:text="Berikan Penilaian buku ini\n Untuk mendapatkan rekomendasi"
                 android:textAlignment="center"
                 android:textColor="@color/colorDarkBlue"
-                app:layout_constraintEnd_toEndOf="@+id/textView14"
-                app:layout_constraintStart_toStartOf="@+id/textView14"
-                app:layout_constraintTop_toBottomOf="@+id/textView14" />
+                app:layout_constraintEnd_toEndOf="@+id/tv_desc"
+                app:layout_constraintStart_toStartOf="@+id/tv_desc"
+                app:layout_constraintTop_toBottomOf="@+id/tv_desc" />
 
             <RatingBar
                 android:id="@+id/ratingBar"
@@ -220,7 +241,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
             <EditText
-                android:id="@+id/editText2"
+                android:id="@+id/et_ulasan"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginStart="24dp"
@@ -239,7 +260,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/btn_rate"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -249,7 +270,7 @@
                 android:background="@drawable/rounded_button_orange"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText2" />
+                app:layout_constraintTop_toBottomOf="@+id/et_ulasan" />
 
             <TextView
                 android:id="@+id/textView17"
@@ -262,9 +283,10 @@
                 android:textColor="@color/colorDarkBlue"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button" />
+                app:layout_constraintTop_toBottomOf="@+id/btn_rate" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_ulasan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"

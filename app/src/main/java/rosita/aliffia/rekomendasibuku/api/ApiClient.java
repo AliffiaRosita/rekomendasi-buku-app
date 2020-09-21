@@ -16,7 +16,7 @@ import rosita.aliffia.rekomendasibuku.preference.UserModel;
 public class ApiClient {
     public AppPreference appPreference;
     public static UserModel userModel;
-    private static final String BASE_URL = "http://192.168.1.31:8000/api/";
+    private static final String BASE_URL = "http://192.168.1.37:8000/api/";
     private static Retrofit retrofit = null;
     public ApiClient(Context context){
         AppPreference appPreference = new AppPreference(context);

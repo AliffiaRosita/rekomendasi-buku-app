@@ -4,78 +4,72 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rosita.aliffia.rekomendasibuku.R;
 import rosita.aliffia.rekomendasibuku.activity.DetailActivity;
+import rosita.aliffia.rekomendasibuku.adapter.BookHomeAdapter;
+import rosita.aliffia.rekomendasibuku.api.ApiClient;
+import rosita.aliffia.rekomendasibuku.api.ApiInterface;
+import rosita.aliffia.rekomendasibuku.data.BookHome;
+import rosita.aliffia.rekomendasibuku.response.ResponseBookHome;
 
 
-public class HomeFragment extends Fragment implements View.OnClickListener {
-
-//    // TODO: Rename parameter arguments, choose names that match
-//    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//    private static final String ARG_PARAM1 = "param1";
-//    private static final String ARG_PARAM2 = "param2";
-//
-//    // TODO: Rename and change types of parameters
-//    private String mParam1;
-//    private String mParam2;
-//
-//    public FragmentHome() {
-//        // Required empty public constructor
-//    }
-//
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param param1 Parameter 1.
-//     * @param param2 Parameter 2.
-//     * @return A new instance of fragment FragmentHome.
-//     */
-//    // TODO: Rename and change types and number of parameters
-//    public static FragmentHome newInstance(String param1, String param2) {
-//        FragmentHome fragment = new FragmentHome();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
-    }
+public class HomeFragment extends Fragment {
 
     ImageView caribuku;
+    RecyclerView rvBook;
+    private ApiInterface apiInterface;
+    String TAG= "HomeFragment";
+    public List<BookHome> bookHomeList;
+    public BookHomeAdapter bookHomeAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_home, container,false);
         caribuku = v.findViewById(R.id.cari_buku);
-        caribuku.setOnClickListener(this);
+        rvBook = v.findViewById(R.id.rv_home_book);
+
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        bookHomeAdapter = new BookHomeAdapter(bookHomeList,getActivity());
+        bookHomeAdapter.notifyDataSetChanged();
+        loadBook();
+
         return v;
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
+    private void loadBook() {
+        Call<ResponseBookHome> responseBookHomeCall = apiInterface.mostRated();
+        responseBookHomeCall.enqueue(new Callback<ResponseBookHome>() {
+            @Override
+            public void onResponse(Call<ResponseBookHome> call, Response<ResponseBookHome> response) {
+                bookHomeList = response.body().getBookHomes();
+                 bookHomeAdapter = new BookHomeAdapter(bookHomeList,getActivity());
+                rvBook.setAdapter(bookHomeAdapter);
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false);
+                rvBook.setLayoutManager(layoutManager);
+            }
 
-            case R.id.cari_buku:
-                Intent i = new Intent(getActivity(), DetailActivity.class);
-                startActivity(i);
-                break;
-        }
+            @Override
+            public void onFailure(Call<ResponseBookHome> call, Throwable t) {
+                  Toast.makeText(getActivity(), "t", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
 }

@@ -2,14 +2,36 @@ package rosita.aliffia.rekomendasibuku.fragment;
 
 import android.os.Bundle;
 
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.SearchView;
+import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rosita.aliffia.rekomendasibuku.R;
+import rosita.aliffia.rekomendasibuku.adapter.BookAdapter;
+import rosita.aliffia.rekomendasibuku.api.ApiClient;
+import rosita.aliffia.rekomendasibuku.api.ApiInterface;
+import rosita.aliffia.rekomendasibuku.data.Book;
+import rosita.aliffia.rekomendasibuku.response.ResponseBook;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,6 +44,7 @@ public class BookFragment extends Fragment implements View.OnClickListener {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "Main Activity";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -60,14 +83,96 @@ public class BookFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    RecyclerView rvBook;
+    ProgressBar pb;
+    NestedScrollView nestedScrollView;
+    List<Book> bookList = new ArrayList<>();
+    BookAdapter bookAdapter;
+    int page = 1;
+    String keyword = "";
+    ApiInterface apiInterface;
+    SearchView searchView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_book, container,false);
+
+        nestedScrollView = v.findViewById(R.id.nested_scroll_book);
+        rvBook = v.findViewById(R.id.rv_book);
+        pb = v.findViewById(R.id.pb_showbook);
+
+        searchView = v.findViewById(R.id.searchView);
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+
+        bookAdapter = new BookAdapter(getActivity(),bookList);
+        bookAdapter.notifyDataSetChanged();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                pb.setVisibility(View.VISIBLE);
+                bookList.clear();
+                getData(s,page);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return true;
+            }
+        });
 
 
-        return inflater.inflate(R.layout.fragment_book, container,false);
+        getData(keyword,page);
+        Log.d(TAG, "onCreateView: "+bookList);
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY == v.getChildAt(0).getMeasuredHeight()- v.getMeasuredHeight()){
+                    page++;
+                    pb.setVisibility(View.VISIBLE);
+
+                    getData(keyword,page);
+                    Log.d(TAG, "onScrollChange: "+bookList);
+                }
+
+            }
+        });
+        return v;
     }
+
+    private void getData(String keywords,int i) {
+        Call<ResponseBook> responseBookCall = apiInterface.searchBook(keywords,i);
+        responseBookCall.enqueue(new Callback<ResponseBook>() {
+            @Override
+            public void onResponse(Call<ResponseBook> call, Response<ResponseBook> response) {
+                if (response.isSuccessful()){
+                    pb.setVisibility(View.GONE);
+                       List<Book> temp = response.body().getBookList();
+                       for (int i = 0; i<temp.size(); i++){
+                           Book book = new Book();
+                           book.setJudul(temp.get(i).getJudul());
+                           book.setDeskripsi(temp.get(i).getDeskripsi());
+                           book.setFoto(temp.get(i).getFoto());
+                           book.setPenerbit(temp.get(i).getPenerbit());
+                           book.setId(temp.get(i).getId());
+                           bookList.add(book);
+                       }
+                        bookAdapter = new BookAdapter(getActivity(),bookList);
+                    rvBook.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        rvBook.setAdapter(bookAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBook> call, Throwable t) {
+                Log.d(TAG, "onFailure: "+t);
+                Toast.makeText(getActivity(), ""+t, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
 
     @Override
     public void onClick(View view) {

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="15dp"
@@ -12,32 +13,32 @@
         android:paddingBottom="24dp">
 
         <TextView
-            android:id="@+id/textView15"
+            android:id="@+id/ulasan_nama"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="14dp"
             android:fontFamily="@font/montserrat_bold"
             android:text="Aliffia"
             android:textColor="@color/colorDarkBlue"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
-            app:layout_constraintStart_toEndOf="@+id/circleImageView"
-            app:layout_constraintTop_toTopOf="@+id/circleImageView" />
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ulasan_foto"
+            app:layout_constraintStart_toEndOf="@+id/ulasan_foto"
+            app:layout_constraintTop_toTopOf="@+id/ulasan_foto" />
 
         <TextView
-            android:id="@+id/textView18"
+            android:id="@+id/ulasan_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:drawableLeft="@drawable/ic_baseline_star_24"
             android:fontFamily="@font/montserrat_regular"
             android:text="4.5"
             android:textColor="@color/colorDarkBlue"
-            android:textSize="16sp"
-            app:layout_constraintStart_toEndOf="@+id/textView15"
-            app:layout_constraintTop_toTopOf="@+id/textView15" />
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/ulasan_nama"
+            app:layout_constraintTop_toBottomOf="@+id/ulasan_nama" />
 
         <TextView
+            android:id="@+id/ulasan_isi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -50,12 +51,12 @@
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
+            app:layout_constraintTop_toBottomOf="@+id/ulasan_foto" />
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/circleImageView"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:id="@+id/ulasan_foto"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:src="@drawable/bg_detail"

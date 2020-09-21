@@ -3,12 +3,26 @@ package rosita.aliffia.rekomendasibuku.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rosita.aliffia.rekomendasibuku.R;
+import rosita.aliffia.rekomendasibuku.adapter.BookAdapter;
+import rosita.aliffia.rekomendasibuku.api.ApiClient;
+import rosita.aliffia.rekomendasibuku.api.ApiInterface;
+import rosita.aliffia.rekomendasibuku.data.Book;
+import rosita.aliffia.rekomendasibuku.response.ResponseRekomendasi;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +35,7 @@ public class RecommendFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = "RecommendFragment";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -57,10 +72,46 @@ public class RecommendFragment extends Fragment {
         }
     }
 
+    RecyclerView rv;
+    ApiInterface apiInterface;
+    List<Book> bookList;
+    BookAdapter bookAdapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recommend, container, false);
+        View v = inflater.inflate(R.layout.fragment_recommend, container, false);
+        rv= v.findViewById(R.id.rv_rekomendasi);
+        bookAdapter = new BookAdapter(getActivity(),bookList);
+        bookAdapter.notifyDataSetChanged();
+        apiInterface= ApiClient.getClient().create(ApiInterface.class);
+        getRecommend();
+        return v;
+    }
+
+    private void getRecommend() {
+        Call<ResponseRekomendasi> call = apiInterface.getRecommend();
+        call.enqueue(new Callback<ResponseRekomendasi>() {
+            @Override
+            public void onResponse(Call<ResponseRekomendasi> call, Response<ResponseRekomendasi> response) {
+                if (response.isSuccessful()){
+                    if (response.body().getRekomendasi() != null) {
+                        bookList = response.body().getRekomendasi();
+                        bookAdapter = new BookAdapter(getActivity(), bookList);
+                        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        rv.setAdapter(bookAdapter);
+                    }
+                    else {
+                        Toast.makeText(getActivity(), "Rekomendasi belum ada, silahkan isi rating dahulu", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseRekomendasi> call, Throwable t) {
+                Log.d(TAG, "onFailure: "+t);
+                Toast.makeText(getActivity(), ""+t, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

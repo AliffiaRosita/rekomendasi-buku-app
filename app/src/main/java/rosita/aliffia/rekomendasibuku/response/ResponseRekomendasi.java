@@ -4,16 +4,17 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import rosita.aliffia.rekomendasibuku.data.Review;
+import rosita.aliffia.rekomendasibuku.data.Book;
+import rosita.aliffia.rekomendasibuku.data.Rekomendasi;
 
-public class ResponseAllRate {
+public class ResponseRekomendasi {
     @SerializedName("data")
-    List<Review> reviews;
+    List<Book> rekomendasi;
     @SerializedName("message")
     String message;
 
-    public List<Review> getReviews() {
-        return reviews;
+    public List<Book> getRekomendasi() {
+        return rekomendasi;
     }
 
     public String getMessage() {
