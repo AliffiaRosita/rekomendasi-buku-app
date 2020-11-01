@@ -24,6 +24,7 @@
 
 
         <Button
+            android:foreground="?attr/selectableItemBackground"
             android:id="@+id/btn_login_masuk"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"
@@ -42,6 +43,7 @@
 
 
         <Button
+            android:foreground="?attr/selectableItemBackground"
             android:id="@+id/btn_login_daftar"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="0dp"

@@ -25,9 +25,10 @@
           android:id="@+id/user_image_thumb"
           android:layout_width="75dp"
           android:layout_height="74dp"
-          android:src="@drawable/bg_detail"
           app:civ_border_color="@android:color/white"
-          app:civ_border_width="2dp" />
+          app:civ_border_width="2dp"
+          android:src="@drawable/empty_user"
+          tools:src="@tools:sample/avatars" />
 
       <TextView
           android:id="@+id/nama_user"
@@ -81,6 +82,7 @@
        app:layout_constraintTop_toBottomOf="@+id/imageView8" >
 
       <Button
+          android:foreground="?attr/selectableItemBackground"
           android:id="@+id/btn_change_pass"
           android:layout_width="250dp"
           android:layout_height="wrap_content"
@@ -98,6 +100,7 @@
           app:layout_constraintTop_toBottomOf="@+id/btn_change_profile" />
 
       <Button
+          android:foreground="?attr/selectableItemBackground"
           android:id="@+id/btn_change_profile"
           android:layout_width="250dp"
           android:layout_height="wrap_content"
@@ -115,6 +118,7 @@
           app:layout_constraintTop_toTopOf="parent" />
 
       <Button
+          android:foreground="?attr/selectableItemBackground"
           android:id="@+id/btn_logout"
           android:layout_width="250dp"
           android:layout_height="wrap_content"

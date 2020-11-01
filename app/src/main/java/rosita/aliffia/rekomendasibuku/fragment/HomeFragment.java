@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.List;
@@ -37,6 +38,7 @@ public class HomeFragment extends Fragment {
     String TAG= "HomeFragment";
     public List<BookHome> bookHomeList;
     public BookHomeAdapter bookHomeAdapter;
+    ProgressBar pb;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -44,8 +46,9 @@ public class HomeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_home, container,false);
         caribuku = v.findViewById(R.id.cari_buku);
         rvBook = v.findViewById(R.id.rv_home_book);
-
-        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        pb = v.findViewById(R.id.pb_home_book);
+        ApiClient apiClient = new ApiClient(getContext());
+        apiInterface = apiClient.getClient().create(ApiInterface.class);
         bookHomeAdapter = new BookHomeAdapter(bookHomeList,getActivity());
         bookHomeAdapter.notifyDataSetChanged();
         loadBook();
@@ -58,11 +61,15 @@ public class HomeFragment extends Fragment {
         responseBookHomeCall.enqueue(new Callback<ResponseBookHome>() {
             @Override
             public void onResponse(Call<ResponseBookHome> call, Response<ResponseBookHome> response) {
-                bookHomeList = response.body().getBookHomes();
+             if (response.isSuccessful()){
+                 pb.setVisibility(View.GONE);
+                 bookHomeList = response.body().getBookHomes();
                  bookHomeAdapter = new BookHomeAdapter(bookHomeList,getActivity());
-                rvBook.setAdapter(bookHomeAdapter);
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false);
-                rvBook.setLayoutManager(layoutManager);
+                 rvBook.setAdapter(bookHomeAdapter);
+                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false);
+                 rvBook.setLayoutManager(layoutManager);
+             }
+
             }
 
             @Override

@@ -9,7 +9,7 @@ import rosita.aliffia.rekomendasibuku.api.ApiClient;
 public class AppPreference {
     public static final String NIM = "NIM";
     public static final String TOKEN = "TOKEN";
-    public static final String NAMA = "NAMA";
+    public static final String NAME = "NAME";
     public static final String IS_ACTIVE = "IS_ACTIVE";
     private static final String PREFS_NAME = "user_pref";
     private static final String FAKULTAS = "FAKULTAS";
@@ -29,7 +29,7 @@ public class AppPreference {
 
     public void setUser(UserModel value){
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(NAMA, value.name);
+        editor.putString(NAME, value.name);
         editor.putString(NIM, value.nim);
         editor.putString(TOKEN, value.token);
         editor.putString(FAKULTAS, value.fakultas);
@@ -42,7 +42,7 @@ public class AppPreference {
 
     public UserModel getUser() {
         UserModel model = new UserModel();
-        model.setName(sharedPreferences.getString(NAMA,""));
+        model.setName(sharedPreferences.getString(NAME,""));
         model.setNim(sharedPreferences.getString(NIM,""));
         model.setToken(sharedPreferences.getString(TOKEN,""));
         model.setFakultas(sharedPreferences.getString(FAKULTAS,""));

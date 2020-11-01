@@ -10,10 +10,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -76,12 +79,15 @@ public class RecommendFragment extends Fragment {
     ApiInterface apiInterface;
     List<Book> bookList;
     BookAdapter bookAdapter;
+    ProgressBar pb;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_recommend, container, false);
         rv= v.findViewById(R.id.rv_rekomendasi);
+        pb = v.findViewById(R.id.pb_rekomendasi);
+
         bookAdapter = new BookAdapter(getActivity(),bookList);
         bookAdapter.notifyDataSetChanged();
         apiInterface= ApiClient.getClient().create(ApiInterface.class);
@@ -95,6 +101,7 @@ public class RecommendFragment extends Fragment {
             @Override
             public void onResponse(Call<ResponseRekomendasi> call, Response<ResponseRekomendasi> response) {
                 if (response.isSuccessful()){
+                    pb.setVisibility(View.GONE);
                     if (response.body().getRekomendasi() != null) {
                         bookList = response.body().getRekomendasi();
                         bookAdapter = new BookAdapter(getActivity(), bookList);
@@ -102,7 +109,7 @@ public class RecommendFragment extends Fragment {
                         rv.setAdapter(bookAdapter);
                     }
                     else {
-                        Toast.makeText(getActivity(), "Rekomendasi belum ada, silahkan isi rating dahulu", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "Rekomendasi belum tersedia, silahkan isi rating terlebih dahulu", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

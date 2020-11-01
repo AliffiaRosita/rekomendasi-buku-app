@@ -45,12 +45,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
         }else{
             ulasan = review.getUlasan();
         }
-        if (review.getFoto() == null) {
-            Glide.with(context)
-                    .load(R.drawable.emptyimage)
-                    .override(95, 130)
-                    .into(holder.foto);
-        } else {
+        if (review.getFoto() != null) {
             Glide.with(context)
                     .load(review.getFoto())
                     .override(95, 130)

@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import rosita.aliffia.rekomendasibuku.R;
+import rosita.aliffia.rekomendasibuku.activity.ChangePasswordActivity;
+import rosita.aliffia.rekomendasibuku.activity.ChangeProfileActivity;
 import rosita.aliffia.rekomendasibuku.activity.LoginActivity;
 import rosita.aliffia.rekomendasibuku.preference.AppPreference;
 import rosita.aliffia.rekomendasibuku.preference.UserModel;
@@ -90,11 +92,15 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         btnChangePass  = v.findViewById(R.id.btn_change_pass);
         btnChangeProfile  = v.findViewById(R.id.btn_change_profile);
 
-        Glide.with(this).load(userModel.getFotoProfil()).into(thumbnail);
+        if (!userModel.getFotoProfil().equals("")) {
+            Glide.with(this).load(userModel.getFotoProfil()).into(thumbnail);
+        }
         tvnama.setText(userModel.getName());
         tvnim.setText(userModel.getNim());
         tvfakultas.setText("Fakultas "+userModel.getFakultas());
         btnLogout.setOnClickListener(this);
+        btnChangeProfile.setOnClickListener(this);
+        btnChangePass.setOnClickListener(this);
         return v;
     }
 
@@ -111,11 +117,21 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 userModel.setUserId("");
                 appPreference.setUser(userModel);
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 getActivity().finish();
                 break;
 
+            case R.id.btn_change_profile:
+                Intent intent1 = new Intent(getActivity(), ChangeProfileActivity.class);
+                startActivity(intent1);
+                break;
+            case R.id.btn_change_pass:
+                Intent intent2 = new Intent(getActivity(), ChangePasswordActivity.class);
+                startActivity(intent2);
+                break;
+
         }
+
     }
 }

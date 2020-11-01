@@ -1,8 +1,10 @@
 package rosita.aliffia.rekomendasibuku.api;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -15,17 +17,21 @@ import rosita.aliffia.rekomendasibuku.preference.UserModel;
 
 public class ApiClient {
     public AppPreference appPreference;
-    public static UserModel userModel;
-    private static final String BASE_URL = "http://192.168.1.37:8000/api/";
+    public static UserModel userModel= new UserModel();
+    private static final String BASE_URL = "https://perpustakaan.unmul.web.id/api/";
     private static Retrofit retrofit = null;
     public ApiClient(Context context){
-        AppPreference appPreference = new AppPreference(context);
+         appPreference = new AppPreference(context);
         userModel = appPreference.getUser();
     }
     public static Retrofit getClient(){
 
         if (retrofit== null){
-            OkHttpClient client = new OkHttpClient.Builder().addInterceptor(new Interceptor() {
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(5, TimeUnit.MINUTES) // connect timeout
+                    .writeTimeout(5, TimeUnit.MINUTES) // write timeout
+                    .readTimeout(5, TimeUnit.MINUTES)
+                    .addInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
                     Request newRequest = chain.request().newBuilder()

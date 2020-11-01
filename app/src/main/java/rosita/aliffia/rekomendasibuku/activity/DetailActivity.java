@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +50,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     ReviewAdapter reviewAdapter;
     Button btnRate;
     EditText etUlasan;
+    ProgressBar pb;
     CollapsingToolbarLayout collapsingToolbarLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         tvTempat = findViewById(R.id.detail_tempat);
         tvPenerbit = findViewById(R.id.detail_penerbit);
         tvIsbn = findViewById(R.id.detail_isbn);
+        pb = findViewById(R.id.pb_detail);
 
         rvReview = findViewById(R.id.rv_ulasan);
         ratingBar = findViewById(R.id.ratingBar);
@@ -94,11 +97,13 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         responseAllRateCall.enqueue(new Callback<ResponseAllRate>() {
             @Override
             public void onResponse(Call<ResponseAllRate> call, Response<ResponseAllRate> response) {
-                reviews = response.body().getReviews();
-                reviewAdapter = new ReviewAdapter(reviews,DetailActivity.this);
-                rvReview.setAdapter(reviewAdapter);
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(DetailActivity.this);
-                rvReview.setLayoutManager(layoutManager);
+                if (response.isSuccessful()) {
+                    reviews = response.body().getReviews();
+                    reviewAdapter = new ReviewAdapter(reviews, DetailActivity.this);
+                    rvReview.setAdapter(reviewAdapter);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(DetailActivity.this);
+                    rvReview.setLayoutManager(layoutManager);
+                }
             }
 
             @Override

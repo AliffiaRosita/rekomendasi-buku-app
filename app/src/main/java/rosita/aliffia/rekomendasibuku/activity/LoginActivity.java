@@ -49,10 +49,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(home);
             finish();
         }
-        btnDaftar.setOnClickListener(this);
-        btnMasuk.setOnClickListener(this);
         ApiClient apiClient = new ApiClient(this);
         apiInterface = apiClient.getClient().create(ApiInterface.class);
+        btnDaftar.setOnClickListener(this);
+        btnMasuk.setOnClickListener(this);
+
 
     }
 
@@ -86,12 +87,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }else{
                     token = response.body().getLogin().getToken();
                     userId = response.body().getLogin().getUserId();
-                    name = response.body().getLogin().getNama();
                     fakultas = response.body().getLogin().getFakultas();
                     angkatan = response.body().getLogin().getAngkatan();
                     fotoProfil = response.body().getLogin().getFotoProfil();
-
+                    name = response.body().getLogin().getNama();
                     AppPreference appPreference = new AppPreference(LoginActivity.this);
+                    UserModel userModel = new UserModel();
                     userModel.setToken(token);
                     userModel.setName(name);
                     userModel.setUserId(userId);
@@ -102,7 +103,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     userModel.setActive(true);
 
                     appPreference.setUser(userModel);
-
+                    Log.d(TAG, "onResponse: "+userModel.getToken());
                     Intent masuk = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(masuk);
                     finish();

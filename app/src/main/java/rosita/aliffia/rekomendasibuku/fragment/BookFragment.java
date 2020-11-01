@@ -146,6 +146,7 @@ public class BookFragment extends Fragment implements View.OnClickListener {
         responseBookCall.enqueue(new Callback<ResponseBook>() {
             @Override
             public void onResponse(Call<ResponseBook> call, Response<ResponseBook> response) {
+                Log.d(TAG, "onResponse: "+response.message()+" "+response.code());
                 if (response.isSuccessful()){
                     pb.setVisibility(View.GONE);
                        List<Book> temp = response.body().getBookList();
