@@ -25,9 +25,10 @@
           android:id="@+id/user_image_thumb"
           android:layout_width="75dp"
           android:layout_height="74dp"
+
+          android:src="@drawable/empty_user"
           app:civ_border_color="@android:color/white"
           app:civ_border_width="2dp"
-          android:src="@drawable/empty_user"
           tools:src="@tools:sample/avatars" />
 
       <TextView

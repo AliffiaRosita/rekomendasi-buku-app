@@ -30,6 +30,7 @@
           android:id="@+id/nested_scroll_book"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:paddingTop="8dp"
           android:layout_marginTop="64dp"
           android:fillViewport="true"
           app:layout_constraintBottom_toBottomOf="parent"

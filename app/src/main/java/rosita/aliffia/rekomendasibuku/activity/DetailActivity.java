@@ -38,7 +38,7 @@ import rosita.aliffia.rekomendasibuku.response.ResponseDetail;
 import rosita.aliffia.rekomendasibuku.response.ResponseSaveRate;
 
 public class DetailActivity extends AppCompatActivity implements View.OnClickListener {
-    TextView tvDesc, tvPenerbit, tvTempat, tvAverage,tvIsbn;
+    TextView  tvPenerbit, tvTempat, tvAverage,tvIsbn;
     ImageView foto;
     RatingBar ratingBar;
     ApiInterface apiInterface;
@@ -56,7 +56,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        tvDesc = findViewById(R.id.tv_desc);
         tvAverage = findViewById(R.id.detail_rating);
         foto = findViewById(R.id.foto_detail);
         tvTempat = findViewById(R.id.detail_tempat);
@@ -98,6 +97,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onResponse(Call<ResponseAllRate> call, Response<ResponseAllRate> response) {
                 if (response.isSuccessful()) {
+                    pb.setVisibility(View.GONE);
                     reviews = response.body().getReviews();
                     reviewAdapter = new ReviewAdapter(reviews, DetailActivity.this);
                     rvReview.setAdapter(reviewAdapter);
@@ -129,7 +129,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                         Glide.with(DetailActivity.this).load(detailBook.getFoto()).into(foto);
                     }
 
-                    tvDesc.setText(""+detailBook.getDeskripsi());
                     tvPenerbit.setText(""+detailBook.getPenerbit());
                     tvTempat.setText(""+detailBook.getTempatTerbit());
                     tvAverage.setText(""+detailBook.getAverage());
@@ -137,6 +136,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
                     if (detailBook.getUserRating() != 0 ){
                         ratingBar.setRating(detailBook.getUserRating());
+                        ratingBar.setIsIndicator(true);
                     }
                 }
 
@@ -168,9 +168,11 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         rateCall.enqueue(new Callback<ResponseSaveRate>() {
             @Override
             public void onResponse(Call<ResponseSaveRate> call, Response<ResponseSaveRate> response) {
-                String message = response.body().getMessage();
-                Toast.makeText(DetailActivity.this, ""+message, Toast.LENGTH_SHORT).show();
-                loadReview();
+                if (response.isSuccessful()) {
+                    String message = response.body().getMessage();
+                    Toast.makeText(DetailActivity.this, "" + message, Toast.LENGTH_SHORT).show();
+                    loadReview();
+                }
             }
 
             @Override

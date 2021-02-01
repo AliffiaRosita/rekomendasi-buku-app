@@ -18,7 +18,7 @@ import rosita.aliffia.rekomendasibuku.preference.UserModel;
 public class ApiClient {
     public AppPreference appPreference;
     public static UserModel userModel= new UserModel();
-    private static final String BASE_URL = "https://perpustakaan.unmul.web.id/api/";
+    private static final String BASE_URL = "http://192.168.0.13:8000/api/";
     private static Retrofit retrofit = null;
     public ApiClient(Context context){
          appPreference = new AppPreference(context);

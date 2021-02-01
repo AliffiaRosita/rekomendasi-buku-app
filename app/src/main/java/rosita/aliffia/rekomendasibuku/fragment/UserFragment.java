@@ -134,4 +134,17 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         }
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        appPreference = new AppPreference(getContext());
+        userModel = appPreference.getUser();
+        tvnama.setText(userModel.getName());
+        tvnim.setText(userModel.getNim());
+        tvfakultas.setText("Fakultas "+userModel.getFakultas());
+        if (!userModel.getFotoProfil().equals("")) {
+            Glide.with(this).load(userModel.getFotoProfil()).into(thumbnail);
+        }
+    }
 }

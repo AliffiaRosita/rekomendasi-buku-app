@@ -1,6 +1,7 @@
 package rosita.aliffia.rekomendasibuku.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 import android.view.View;
@@ -32,6 +33,19 @@ public class ChangePasswordActivity extends AppCompatActivity {
         etNewPass = findViewById(R.id.new_pass);
         etConfirm = findViewById(R.id.confirm_pass);
         btnUpdate = findViewById(R.id.btn_update_pass);
+
+        Toolbar toolbar= findViewById(R.id.emptyToolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Ubah Password");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
 

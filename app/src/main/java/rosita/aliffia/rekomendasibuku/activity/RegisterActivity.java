@@ -80,7 +80,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         regisCall.enqueue(new Callback<ResponseRegis>() {
             @Override
             public void onResponse(Call<ResponseRegis> call, Response<ResponseRegis> response) {
-                login();
+                if (response.isSuccessful()){
+                    if (response.code() == 200){
+                        Log.d(TAG, "onResponse: Berhasil registrasi");
+                        login();
+                    }
+                    //belum di test
+                }
+                if(response.code() == 400){
+                    Toast.makeText(RegisterActivity.this, "Error: Nim Sudah Terdaftar", Toast.LENGTH_SHORT).show();
+                }
+
 
             }
 

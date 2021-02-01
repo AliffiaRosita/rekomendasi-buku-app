@@ -2,6 +2,7 @@ package rosita.aliffia.rekomendasibuku.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -125,15 +126,16 @@ public class BookFragment extends Fragment implements View.OnClickListener {
 
         getData(keyword,page);
         Log.d(TAG, "onCreateView: "+bookList);
+
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY == v.getChildAt(0).getMeasuredHeight()- v.getMeasuredHeight()){
+                if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight() + 16){
                     page++;
                     pb.setVisibility(View.VISIBLE);
-
+//                    Log.d(TAG, "onScrollChange: "+page);
                     getData(keyword,page);
-                    Log.d(TAG, "onScrollChange: "+bookList);
+//                    Log.d(TAG, "onScrollChange: "+bookList);
                 }
 
             }

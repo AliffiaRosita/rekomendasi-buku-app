@@ -7,8 +7,6 @@ public class DetailBook {
     String id;
     @SerializedName("judul")
     String judul;
-    @SerializedName("deskripsi")
-    String deskripsi;
     @SerializedName("foto")
     String foto;
     @SerializedName("average")
@@ -34,10 +32,6 @@ public class DetailBook {
 
     public String getJudul() {
         return judul;
-    }
-
-    public String getDeskripsi() {
-        return deskripsi;
     }
 
     public String getFoto() {

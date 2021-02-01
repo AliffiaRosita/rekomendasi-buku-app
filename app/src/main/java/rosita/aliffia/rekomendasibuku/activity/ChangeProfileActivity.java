@@ -2,6 +2,7 @@ package rosita.aliffia.rekomendasibuku.activity;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
@@ -78,11 +79,26 @@ public class ChangeProfileActivity extends AppCompatActivity implements View.OnC
         appPreference = new AppPreference(ChangeProfileActivity.this);
         userModel = appPreference.getUser();
 
+        Toolbar toolbar= findViewById(R.id.emptyToolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Ubah Profil");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         etName.getEditText().setText(userModel.getName());
         etNim.getEditText().setEnabled(false);
         etNim.getEditText().setText(userModel.getNim());
         etAngkatan.getEditText().setText(userModel.getAngkatan());
-        Glide.with(this).load(userModel.getFotoProfil()).into(imgUpload);
+        if (!userModel.getFotoProfil().equals("")){
+            Glide.with(this).load(userModel.getFotoProfil()).into(imgUpload);
+        }
         fakultas = userModel.getFakultas();
 
         String[] fakultas_list = getResources().getStringArray(R.array.list_fakultas);
@@ -185,6 +201,7 @@ public class ChangeProfileActivity extends AppCompatActivity implements View.OnC
                         userModel.setFotoProfil(response.body().getFotoProfil());
                     }
                     appPreference.setUser(userModel);
+                    Log.d(TAG, "onResponse: "+userModel.getName());
 //                    FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 //                    fragmentTransaction.replace(R.id.change_profile, new UserFragment()).commit();
                     Toast.makeText(ChangeProfileActivity.this, "Berhasil mengubah profil", Toast.LENGTH_SHORT).show();
@@ -213,5 +230,11 @@ public class ChangeProfileActivity extends AppCompatActivity implements View.OnC
             imgUpload.setImageBitmap(bitmap);
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

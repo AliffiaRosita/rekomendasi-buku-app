@@ -51,7 +51,7 @@ public interface ApiInterface {
     Call<ResponseAllRate> allRate(@Path("buku_id") int bukuId);
 
     @FormUrlEncoded
-    @POST("books/rate/")
+    @POST("books/rate/save")
     Call<ResponseSaveRate> saveRate(
         @Field("buku_id") int buku_id,
         @Field("nilai") float nilai,
